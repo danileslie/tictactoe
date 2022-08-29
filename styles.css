@@ -1,0 +1,32 @@
+body{
+    padding: 0;
+    height: 100vh;
+    max-width: 50%;
+    margin: auto;
+    box-sizing: border-box;
+    background: powderblue;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1rem;
+    border: 2px solid goldenrod;
+    width: 50rem;
+    height: 50rem;
+    margin: 1rem auto;
+}
+
+.square{
+    background-color: rgb(87, 62, 177);
+    border-radius: 10px;
+}
+
+.playerX{
+ background-color: rgb(130, 204, 115);
+}
+
+.playerO{
+    background-color: rgb(230, 172, 65);
+}
