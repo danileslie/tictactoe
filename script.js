@@ -2,6 +2,8 @@
 
 const gameBoard = (() => {
 let gameActive = true;
+let restart = document.querySelector('.reset');
+
 const playerCreation = (marker, turn) => {
     return {marker, turn};
 }
@@ -13,20 +15,18 @@ const winConditions = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
                        [0, 3, 6], [1, 4, 7], [2, 5, 8], 
                        [0, 4, 8], [2, 4, 6]]
 
-
-
 const generateBoard = (() => {
-const board = [];
+let board = [];
 for (let i = 0; i < 9; i++){
     board.push('');
-}
+};
 
 let container = document.querySelector('.container');
 board.forEach((item, index) => {
     let square = document.createElement('div');
     square.classList.add('square');
     container.appendChild(square);
-})
+});
 
 const validMove = (square) => {
     if (square.innerText === 'X' || square.innerText === 'O'){
@@ -34,18 +34,18 @@ const validMove = (square) => {
     } else {
       return true;
     }
-}
+};
 
 const changePlayer = () => {
     if (currentPlayer === playerX){
         currentPlayer = playerO;
     }  else {currentPlayer = playerX}
-}
+};
 
 const boardUpdate = (index) =>{
     board[index] = currentPlayer;
     console.log(board);
-}
+};
 
 const gameResult = () => {
     // search for a win condition in each round
@@ -68,7 +68,7 @@ const gameResult = () => {
         gameActive = false;
         return;
     }
-}
+};
 
 const playerTest = (square, index) => {
     if (validMove(square) && gameActive){
@@ -77,7 +77,7 @@ const playerTest = (square, index) => {
     gameResult();
     changePlayer();
     }
-}
+};
 
 const squares = document.querySelectorAll('.square');
 
@@ -89,6 +89,19 @@ const playerTurn = (() => {
         );   
         });
     })();
+
+    
+const restartButton = () => {
+    gameActive = true;
+    
+    board = ['', '', '', '', '', '', '', '', ''];
+    console.log(board);
+    currentPlayer = playerX;
+    document.querySelectorAll('.square').forEach(square => square.innerText = '');
+ };
+
+restart.addEventListener('click', restartButton);
+    
 })();
 })();
 
