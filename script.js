@@ -3,6 +3,7 @@
 const gameBoard = (() => {
 let gameActive = true;
 let restart = document.querySelector('.reset');
+let turnAnnouncement = document.querySelector('.turn-announcement');
 
 const playerCreation = (marker, turn) => {
     return {marker, turn};
@@ -36,15 +37,22 @@ const validMove = (square) => {
     }
 };
 
+const turnCall = () => {
+    turnAnnouncement.textContent = `It's Player ${currentPlayer.marker}'s turn`   
+};
+turnCall();
+
 const changePlayer = () => {
     if (currentPlayer === playerX){
         currentPlayer = playerO;
-    }  else {currentPlayer = playerX}
+        turnCall();
+    }  else {currentPlayer = playerX;
+    turnCall();
+}
 };
 
 const boardUpdate = (index) =>{
     board[index] = currentPlayer;
-    console.log(board);
 };
 
 const gameResult = () => {
@@ -60,22 +68,25 @@ const gameResult = () => {
         }
         if (winCondition1 === winCondition2 && winCondition2 === winCondition3) {
             winningRound = true;
+            
             break;
         }
     }
     if (winningRound) {
-        console.log(`Round won by ${currentPlayer.marker}`);
-        gameActive = false;
+        turnAnnouncement.textContent = `Round won by Player${currentPlayer.marker}!`;
+        gameActive = false; 
         return;
     }
+    changePlayer();
 };
+
 
 const playerTest = (square, index) => {
     if (validMove(square) && gameActive){
+    square.classList.add(`player${currentPlayer.marker}`);
     square.innerText = currentPlayer.marker;
     boardUpdate(index);
     gameResult();
-    changePlayer();
     }
 };
 
@@ -93,11 +104,13 @@ const playerTurn = (() => {
     
 const restartButton = () => {
     gameActive = true;
-    
     board = ['', '', '', '', '', '', '', '', ''];
-    console.log(board);
     currentPlayer = playerX;
-    document.querySelectorAll('.square').forEach(square => square.innerText = '');
+    document.querySelectorAll('.square').forEach(square => {
+        square.innerText = '';
+    square.classList.remove('playerX', 'playerO');
+});
+    turnCall();
  };
 
 restart.addEventListener('click', restartButton);
