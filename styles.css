@@ -14,7 +14,7 @@ body{
 }
 .title{
     margin: 0;
-    padding: 30px;
+    padding: 10px;
     text-align: center;
     background: var(--pink);
     border-bottom: 2px solid var(--red);
@@ -26,7 +26,7 @@ button{
 font-size: 3rem;
 border-radius: 16px;
 border-style: none;
-padding: 15px 30px;
+padding: 10px 25px;
 margin: 1rem;
 background: var(--pink);
 color: var(--yellow);
@@ -37,8 +37,8 @@ color: var(--yellow);
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     gap: 1rem;
-    width: 50rem;
-    height: 50rem;
+    width: 40rem;
+    height: 40rem;
     margin: 1.5rem auto;
 }
 
