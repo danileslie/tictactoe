@@ -12,6 +12,7 @@ const playerCreation = (marker, turn) => {
 const playerX = playerCreation('X', true);
 const playerO = playerCreation('O', false);
 let currentPlayer = playerX;
+
 const winConditions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], 
                        [0, 3, 6], [1, 4, 7], [2, 5, 8], 
                        [0, 4, 8], [2, 4, 6]]
@@ -46,7 +47,8 @@ const changePlayer = () => {
     if (currentPlayer === playerX){
         currentPlayer = playerO;
         turnCall();
-    }  else {currentPlayer = playerX;
+    }  else {
+    currentPlayer = playerX;
     turnCall();
 }
 };
@@ -58,6 +60,7 @@ const boardUpdate = (index) =>{
 const gameResult = () => {
     // search for a win condition in each round
     let winningRound = false;
+    let tiedGame = !board.includes('');
     for (let i = 0; i <=7; i++){
         let winCondition1 = board[winConditions[i][0]];
         let winCondition2 = board[winConditions[i][1]];
@@ -68,20 +71,24 @@ const gameResult = () => {
         }
         if (winCondition1 === winCondition2 && winCondition2 === winCondition3) {
             winningRound = true;
-            
             break;
         }
     }
     if (winningRound) {
         turnAnnouncement.textContent = `Round won by Player${currentPlayer.marker}!`;
-        gameActive = false; 
+        gameActive = false;      
+        return;
+    }
+    if(tiedGame){
+        console.log('tie');
+        turnAnnouncement.textContent = `It's a tie!`;
+        gameActive = false;
         return;
     }
     changePlayer();
 };
 
-
-const playerTest = (square, index) => {
+const moveUpdate = (square, index) => {
     if (validMove(square) && gameActive){
     square.classList.add(`player${currentPlayer.marker}`);
     square.innerText = currentPlayer.marker;
@@ -95,13 +102,12 @@ const squares = document.querySelectorAll('.square');
 const playerTurn = (() => {
     squares.forEach((square, index) => {
         square.addEventListener('click', () => {
-                playerTest(square, index);
+                moveUpdate(square, index);
             }
         );   
         });
     })();
-
-    
+   
 const restartButton = () => {
     gameActive = true;
     board = ['', '', '', '', '', '', '', '', ''];
@@ -113,8 +119,7 @@ const restartButton = () => {
     turnCall();
  };
 
-restart.addEventListener('click', restartButton);
-    
+restart.addEventListener('click', restartButton);   
 })();
 })();
 
